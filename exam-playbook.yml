@@ -1,0 +1,22 @@
+- hosts: all
+  become: true
+  vars:
+    wp_version: 5.7.1
+    wp_webserver: nginx
+    wp_mysql_db: "wordpress"
+    wp_mysql_user: "datascientest"
+    wp_mysql_password: "dbpassword"
+    wp_mysql_host: "172.31.3.1" 
+    wp_admin_email: "joel.lourenco.pro@gmail.com"
+    wp_sitename: "exam-ansible"
+    wp_install_dir: "/var/www/demo.com"
+    wp_db_name: "datascientest"
+    wp_db_password: "datascientest"
+    wp_db_host: "localhost"
+    wp_db_charset: "utf-8"
+  roles:
+    - role: mysql
+      when: "'mysql_servers' in group_names"
+
+    - role: wordpress
+      when: "'wordpress_servers' in group_names"

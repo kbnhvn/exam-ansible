@@ -1,0 +1,15 @@
+all:
+  vars:
+    ansible_user: datascientest
+    ansible_password: Datascientest2022
+    ansible_become_pass: Datascientest2022
+
+serveurdatabase:
+  hosts:
+    mysql_server:
+      ansible_host: 172.31.3.1
+
+serveurweb:
+  hosts:
+    wordpress_server:
+      ansible_host: 172.31.4.1
