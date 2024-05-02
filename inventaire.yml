@@ -7,9 +7,7 @@ all:
 serveurdatabase:
   hosts:
     mysql_server:
-      ansible_host: 172.31.3.1
 
 serveurweb:
   hosts:
     wordpress_server:
-      ansible_host: 172.31.4.1
