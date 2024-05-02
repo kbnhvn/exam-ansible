@@ -1,0 +1,41 @@
+# tasks file for Nginx
+- name: WordPress | Nginx | PHP FPM socket path
+  shell: dpkg -l | grep php-fpm  | awk '{print $3}' | grep -o '[0-9]\.[0-9]' | head -n 1
+  register: "php_ver"
+
+- name: Service php{{ php_ver.stdout }} restart
+  service:
+    name: "php{{ php_ver.stdout }}-fpm"
+    state: started
+
+- name: Start nginx
+  service:
+    name: "nginx"
+    state: started
+
+- name: WordPress | Nginx | vhost conf
+  template:
+    src: "nginx-vhost.j2"
+    dest: "/etc/nginx/sites-available/{{ wp_sitename }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: WordPress | Nginx | enabled sites
+  file:
+    state: link
+    src: "/etc/nginx/sites-available/{{ wp_sitename }}"
+    dest: "/etc/nginx/sites-enabled/{{ wp_sitename }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Disable the default site
+  file:
+    path: "/etc/nginx/sites-enabled/default"
+    state: absent
+
+- name: Disable the default site (on newer nginx versions)
+  file:
+    path: "/etc/nginx/sites-enabled/default.conf"
+    state: absent

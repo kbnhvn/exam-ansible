@@ -1,2 +1,84 @@
 ---
 # tasks file for wordpress
+- name: WordPress | Installer php
+  apt:
+    pkg:
+      [
+        "php-pear",
+        "php-fpm",
+        "php-dev",
+        "php-zip",
+        "php-curl",
+        "php-xmlrpc",
+        "php-gd",
+        "php-mysql",
+        "php-mbstring",
+        "php-xml",
+      ]
+    update_cache: yes
+    cache_valid_time: 86400
+    state: present
+
+- name: Wordpress | Installer nginx
+  apt:
+    pkg: nginx
+    update_cache: yes
+    cache_valid_time: 86400
+    state: present
+  when: wp_webserver == "nginx"
+
+- name: WordPress | remove /var/www/html/
+  file:
+    path: /var/www/html/index.html
+    state: absent
+  when: wp_install_dir == "/var/www/html"
+
+- name: WordPress | create directory
+  file:
+    path: "{{ wp_install_dir }}"
+    state: directory
+    mode: 0755
+
+- name: WordPress | extract wp archive in {{ wp_install_dir }}
+  unarchive:
+    src: "http://wordpress.org/wordpress-{{ wp_version }}.tar.gz"
+    dest: "{{ wp_install_dir }}"
+    remote_src: yes
+
+- name: WordPress | move files from {{ wp_install_dir }}/wordpress to {{ wp_install_dir }}
+  command: cp -rf . "{{ wp_install_dir }}"
+  args:
+    chdir: "{{ wp_install_dir }}/wordpress/"
+
+- name: WordPress | delete wordpress directory
+  file:
+    path: "{{ wp_install_dir }}/wordpress/"
+    state: absent
+
+- name: WordPress | salts for wp-config.php
+  delegate_to: localhost
+  uri:
+    url: https://api.wordpress.org/secret-key/1.1/salt/
+    return_content: yes
+  become: False
+  register: "wp_salt_array"
+
+- name: define wp_salt fact
+  set_fact:
+    wp_salt: "{{ wp_salt_array.content }}"
+
+- name: WordPress | wp-config.php copy
+  template:
+    src: wp-config.php.j2
+    dest: "{{ wp_install_dir }}/wp-config.php"
+
+- name: WordPress | change owner of install dir
+  file:
+    path: "{{ wp_install_dir }}"
+    owner: www-data
+    group: www-data
+    state: directory
+    recurse: yes
+
+- include_tasks: nginx.yml
+  when: wp_webserver == "nginx"

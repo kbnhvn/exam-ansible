@@ -1,2 +1,5 @@
 ---
 # defaults file for mysql
+wp_db_name: "{{ wp_mysql_db }}"
+wp_db_user: "{{ wp_mysql_user }}"
+wp_db_password: "{{ wp_mysql_password }}"
