@@ -2,6 +2,10 @@
   hosts: all
   gather_facts: false
   tasks:
+    - name: Install sudo
+      raw: apt-get update && apt-get install -y sudo
+      become: false
+      
     - name: Update apt cache
       ansible.builtin.apt:
         update_cache: yes
