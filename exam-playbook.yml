@@ -14,7 +14,7 @@
     wp_db_user: "datascientest"
     wp_db_password: "dbpassword"
     wp_db_host: "172.31.9.163"
-    wp_db_charset: "utf-8"
+    wp_db_charset: "utf8"
   roles:
     - role: mysql
       when: "'serveurdatabase' in group_names"
