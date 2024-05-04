@@ -9,7 +9,7 @@
     wp_mysql_host: "172.31.9.163" 
     wp_admin_email: "joel.lourenco.pro@gmail.com"
     wp_sitename: "exam-ansible"
-    wp_install_dir: "/var/www/demo.com"
+    wp_install_dir: "/var/www/html/demo.com"
     wp_db_name: "wordpress"
     wp_db_user: "datascientest"
     wp_db_password: "dbpassword"
