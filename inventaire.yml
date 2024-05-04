@@ -3,11 +3,10 @@ all:
     ansible_user: datascientest
     ansible_password: Datascientest2022
     ansible_become_pass: Datascientest2022
-
-serveurdatabase:
-  hosts:
-    mysql_server:
-
-serveurweb:
-  hosts:
-    wordpress_server:
+  children:
+    serveurdatabase:
+      hosts:
+        mysql_server:
+    serveurweb:
+      hosts:
+        wordpress_server:

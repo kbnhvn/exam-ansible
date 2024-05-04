@@ -16,7 +16,7 @@
     wp_db_charset: "utf-8"
   roles:
     - role: mysql
-      when: "'mysql_servers' in group_names"
+      when: "'serveurdatabase' in group_names"
 
     - role: wordpress
-      when: "'wordpress_servers' in group_names"
+      when: "'serveurweb' in group_names"
