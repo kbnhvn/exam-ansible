@@ -19,12 +19,13 @@ def test_wp_config_exists(host):
     assert wp_config.exists
 
 def test_mysql_connection(host):
-    cmd = host.run('php -r \'$mysqli = new mysqli("%s", "%s", "%s", "%s"); if ($mysqli->connect_error) { exit(1); } else { exit(0); }\'', 
-                   host.ansible.get_variables()['wp_db_host'],
-                   host.ansible.get_variables()['wp_db_user'],
-                   host.ansible.get_variables()['wp_db_password'],
-                   host.ansible.get_variables()['wp_mysql_db'])
-    assert cmd.rc == 0, "MySQL connection test failed"
+    wp_db_host = host.ansible.get_variables().get('wp_db_host')
+    wp_db_user = host.ansible.get_variables().get('wp_db_user')
+    wp_db_password = host.ansible.get_variables().get('wp_db_password')
+    wp_mysql_db = host.ansible.get_variables().get('wp_mysql_db')
+    cmd = host.run(f"mysql -h {wp_db_host} -u {wp_db_user} -p{wp_db_password} -e 'SHOW DATABASES;'")
+    assert 'Error' not in cmd.stderr, "MySQL connection failed: {}".format(cmd.stderr)
+    assert wp_mysql_db in cmd.stdout, "Database {} should be listed in MySQL databases".format(wp_mysql_db)
 
 def test_wordpress_accessible(host):
     response = host.run("curl -sL -w '%{http_code}\\n' 'http://localhost/' -o /dev/null")
