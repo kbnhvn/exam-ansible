@@ -9,18 +9,8 @@
     - name: Set python3 as the ansible python interpreter
       set_fact:
         ansible_python_interpreter: /usr/bin/python3
-        
+
     - name: Update apt cache
       ansible.builtin.apt:
         update_cache: yes
       become: true
-
-    - name: Ensure Python is installed
-      ansible.builtin.apt:
-        name: python3
-        state: present
-      become: true
-
-    - name: Set python3 as the ansible python interpreter
-      ansible.builtin.set_fact:
-        ansible_python_interpreter: /usr/bin/python3
