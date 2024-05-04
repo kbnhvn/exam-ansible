@@ -1,7 +1,7 @@
 - hosts: all
   become: true
   vars:
-    wp_version: latest
+    wp_version: "latest"
     wp_webserver: nginx
     wp_mysql_db: "wordpress"
     wp_mysql_user: "datascientest"
