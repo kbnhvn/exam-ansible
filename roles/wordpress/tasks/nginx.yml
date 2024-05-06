@@ -41,6 +41,6 @@
     state: absent
 
 - name: Restart Nginx
-  systemd:
+  service:
     name: nginx
     state: restarted
