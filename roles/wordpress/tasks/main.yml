@@ -71,7 +71,7 @@
   file:
     path: "{{ wp_install_dir }}/wordpress/"
     state: absent
-  when: not (wp_install_dir | is_dir)
+  when: wp_dir.stat.exists and wp_dir.stat.isdir
 
 - name: WordPress | salts for wp-config.php
   delegate_to: localhost
