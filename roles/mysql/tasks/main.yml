@@ -51,9 +51,4 @@
     regexp: "^bind-address"
     line: "bind-address = 0.0.0.0"
     state: present
-
-- name: Restart MySQL service
-  service:
-    name: mysql
-    state: restarted
-  when: mysql_config_changed.changed or mysql_user_changed.changed
+  notify: restart mysql
