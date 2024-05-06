@@ -2,16 +2,19 @@
 - name: WordPress | Nginx | PHP FPM socket path
   shell: dpkg -l | grep php-fpm  | awk '{print $3}' | grep -o '[0-9]\.[0-9]' | head -n 1
   register: "php_ver"
+  changed_when: false
 
 - name: Service php{{ php_ver.stdout }} restart
   service:
     name: "php{{ php_ver.stdout }}-fpm"
     state: started
+  when: php_config_changed.changed
 
 - name: Start nginx
   service:
     name: "nginx"
     state: started
+  when: nginx_config_changed.changed
 
 - name: WordPress | Nginx | vhost conf
   template:
@@ -20,6 +23,7 @@
     owner: root
     group: root
     mode: 0644
+  notify: restart nginx
 
 - name: WordPress | Nginx | enabled sites
   file:
@@ -39,8 +43,3 @@
   file:
     path: "/etc/nginx/sites-enabled/default.conf"
     state: absent
-
-- name: Restart Nginx
-  service:
-    name: nginx
-    state: restarted

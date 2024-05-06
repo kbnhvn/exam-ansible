@@ -49,16 +49,19 @@
     src: "http://wordpress.org/wordpress-{{ wp_version }}.tar.gz"
     dest: "{{ wp_install_dir }}"
     remote_src: yes
+    creates: "{{ wp_install_dir }}/wp-config-sample.php"
 
-- name: WordPress | move files from {{ wp_install_dir }}/wordpress to {{ wp_install_dir }}
+- name: WordPress | move files from {{ wp_install_dir }}/wordpress to {{ wp_install_dir }} if necessary
   command: cp -rf . "{{ wp_install_dir }}"
   args:
     chdir: "{{ wp_install_dir }}/wordpress/"
+  when: not (wp_install_dir | is_dir)
 
 - name: WordPress | delete wordpress directory
   file:
     path: "{{ wp_install_dir }}/wordpress/"
     state: absent
+  when: not (wp_install_dir | is_dir)
 
 - name: WordPress | salts for wp-config.php
   delegate_to: localhost
@@ -67,15 +70,18 @@
     return_content: yes
   become: False
   register: "wp_salt_array"
+  changed_when: false
 
 - name: define wp_salt fact
   set_fact:
     wp_salt: "{{ wp_salt_array.content }}"
+  changed_when: false
 
 - name: WordPress | wp-config.php copy
   template:
     src: wp-config.php.j2
     dest: "{{ wp_install_dir }}/wp-config.php"
+  notify: restart nginx
 
 - name: WordPress | change owner of install dir
   file:

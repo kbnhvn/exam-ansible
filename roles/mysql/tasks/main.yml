@@ -56,3 +56,4 @@
   service:
     name: mysql
     state: restarted
+  when: mysql_config_changed.changed or mysql_user_changed.changed
