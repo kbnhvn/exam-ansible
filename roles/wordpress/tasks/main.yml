@@ -89,11 +89,16 @@
     wp_salt: "{{ wp_salt_array.content }}"
   changed_when: false
 
+- name: Check if wp-config.php needs an update
+  stat:
+    path: "{{ wp_install_dir }}/wp-config.php"
+  register: wp_config
+
 - name: WordPress | wp-config.php copy
   template:
     src: wp-config.php.j2
     dest: "{{ wp_install_dir }}/wp-config.php"
-  notify: restart nginx
+  when: not wp_config.exists
 
 - name: WordPress | change owner of install dir
   file:

@@ -32,12 +32,26 @@
     group: root
     mode: 0644
 
+- name: Check if the default site is enabled
+  stat:
+    path: "/etc/nginx/sites-enabled/default"
+  register: default_site
+
 - name: Disable the default site
   file:
     path: "/etc/nginx/sites-enabled/default"
     state: absent
+  when: default_site.stat.exists
+  notify: restart nginx
+
+- name: Check if the default site is enabled (on newer nginx versions)
+  stat:
+    path: "/etc/nginx/sites-enabled/default.conf"
+  register: default_site_new
 
 - name: Disable the default site (on newer nginx versions)
   file:
     path: "/etc/nginx/sites-enabled/default.conf"
     state: absent
+  when: default_site_new.stat.exists
+  notify: restart nginx
