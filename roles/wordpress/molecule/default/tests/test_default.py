@@ -15,7 +15,7 @@ def test_nginx_config(host):
     assert cmd.rc == 0, "Nginx configuration test failed"
 
 def test_wp_config_exists(host):
-    wp_config = host.file("/var/www/demo.com/wp-config.php")
+    wp_config = host.file("/var/www/html/demo.com/wp-config.php")
     assert wp_config.exists
 
 def test_mysql_connection(host):

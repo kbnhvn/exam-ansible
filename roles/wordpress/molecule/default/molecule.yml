@@ -24,5 +24,9 @@ provisioner:
         wp_db_host: "172.31.9.163"
         wp_db_charset: "utf8"
         wp_debug: "True"
+        wp_mysql_db: "wordpress"
+        wp_mysql_user: "datascientest"
+        wp_mysql_password: "dbpassword"
+        wp_mysql_host: "172.31.9.163" 
 verifier:
   name: testinfra
