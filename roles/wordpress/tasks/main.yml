@@ -66,6 +66,7 @@
   command: mv "{{ item.path }}" "{{ wp_install_dir }}/"
   loop: "{{ files_to_move.files }}"
   when: 
+    - wp_dir.stat.exists and wp_dir.stat.isdir
     - files_to_move.files | length > 0
 
 - name: WordPress | delete wordpress directory
