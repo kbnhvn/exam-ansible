@@ -98,7 +98,7 @@
   template:
     src: wp-config.php.j2
     dest: "{{ wp_install_dir }}/wp-config.php"
-  when: not wp_config.exists
+  when: not wp_config.stat.exists
 
 - name: WordPress | change owner of install dir
   file:
