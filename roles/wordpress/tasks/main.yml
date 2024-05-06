@@ -64,8 +64,9 @@
 
 - name: Move files from /var/www/html/demo.com/wordpress to /var/www/html/demo.com if necessary
   command: mv "{{ item.path }}" "{{ wp_install_dir }}/"
-  with_items: "{{ files_to_move.files }}"
-  when: files_to_move.matched > 0
+  loop: "{{ files_to_move.files }}"
+  when: 
+    - files_to_move.files | length > 0
 
 - name: WordPress | delete wordpress directory
   file:
