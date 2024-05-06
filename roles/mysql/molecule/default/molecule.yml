@@ -12,7 +12,7 @@ provisioner:
   inventory:
     host_vars:
       instance:
-        ansible_become: true
+        # ansible_become: true
         wp_mysql_db: "wordpress"
         wp_mysql_user: "datascientest"
         wp_mysql_password: "dbpassword"

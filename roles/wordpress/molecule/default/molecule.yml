@@ -12,7 +12,7 @@ provisioner:
   inventory:
     host_vars:
       instance:
-        ansible_become: true
+        # ansible_become: true
         wp_version: "latest"
         wp_webserver: "nginx"
         wp_admin_email: "joel.lourenco.pro@gmail.com"
