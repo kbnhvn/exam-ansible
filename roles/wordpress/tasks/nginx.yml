@@ -8,13 +8,11 @@
   service:
     name: "php{{ php_ver.stdout }}-fpm"
     state: started
-  when: php_config_changed.changed
 
 - name: Start nginx
   service:
     name: "nginx"
     state: started
-  when: nginx_config_changed.changed
 
 - name: WordPress | Nginx | vhost conf
   template:
