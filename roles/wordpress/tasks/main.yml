@@ -56,9 +56,16 @@
     path: "{{ wp_install_dir }}/wordpress"
   register: wp_dir
 
-- name: Move files from {{ wp_install_dir }}/wordpress to {{ wp_install_dir }} if necessary
-  command: mv {{ wp_install_dir }}/wordpress/* {{ wp_install_dir }}/
+- name: Find WordPress files to move
+  find:
+    paths: "{{ wp_install_dir }}/wordpress"
+  register: files_to_move
   when: wp_dir.stat.exists and wp_dir.stat.isdir
+
+- name: Move files from /var/www/html/demo.com/wordpress to /var/www/html/demo.com if necessary
+  command: mv "{{ item.path }}" "{{ wp_install_dir }}/"
+  with_items: "{{ files_to_move.files }}"
+  when: files_to_move.matched > 0
 
 - name: WordPress | delete wordpress directory
   file:
