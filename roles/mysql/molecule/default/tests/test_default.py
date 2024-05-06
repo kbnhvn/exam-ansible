@@ -8,8 +8,8 @@ def test_mysql_running(host):
 
 def test_mysql_create_table(host):
     cmd = host.run('mysql -u %s -p%s -h %s -e "CREATE TABLE test_table(id INT);" %s',
-                   host.ansible.get_variables()['wp_db_user'],
-                   host.ansible.get_variables()['wp_db_password'],
-                   host.ansible.get_variables()['wp_db_host'],
+                   host.ansible.get_variables()['wp_mysql_user'],
+                   host.ansible.get_variables()['wp_mysql_password'],
+                   host.ansible.get_variables()['wp_mysql_host'],
                    host.ansible.get_variables()['wp_mysql_db'])
     assert 'ERROR' not in cmd.stderr, "Failed to create table in MySQL"

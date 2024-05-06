@@ -9,5 +9,13 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
+  inventory:
+    host_vars:
+      instance:
+        ansible_become: true
+        wp_mysql_db: "wordpress"
+        wp_mysql_user: "datascientest"
+        wp_mysql_password: "dbpassword"
+        wp_mysql_host: "172.31.9.163"
 verifier:
   name: testinfra
