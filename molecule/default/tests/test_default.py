@@ -1,6 +1,19 @@
 """Role testing files using testinfra."""
 
 
+def test_mysql_running(host):
+    mysql = host.service("mysql")
+    assert mysql.is_running
+    assert mysql.is_enabled
+
+def test_mysql_create_table(host):
+    cmd = host.run('mysql -u %s -p%s -h %s -e "CREATE TABLE test_table(id INT);" %s',
+                   host.ansible.get_variables()['wp_mysql_user'],
+                   host.ansible.get_variables()['wp_mysql_password'],
+                   host.ansible.get_variables()['wp_mysql_host'],
+                   host.ansible.get_variables()['wp_mysql_db'])
+    assert 'ERROR' not in cmd.stderr, "Failed to create table in MySQL"
+
 def test_nginx_installed(host):
     nginx = host.package("nginx")
     assert nginx.is_installed
@@ -30,3 +43,5 @@ def test_mysql_connection(host):
 def test_wordpress_accessible(host):
     response = host.run("curl -sL -w '%{http_code}\\n' 'http://localhost/' -o /dev/null")
     assert response.stdout.strip() == '200', "WordPress is not accessible or not returning HTTP 200"
+
+
