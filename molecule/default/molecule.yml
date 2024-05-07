@@ -5,10 +5,10 @@ driver:
   name: docker
 platforms:
   - name: mysql_instance
-    image: "docker.io/library/ubuntu:20.04"
+    image: "docker.io/library/ubuntu:22.04"
     pre_build_image: true
   - name: wordpress_instance
-    image: "docker.io/library/ubuntu:20.04"
+    image: "docker.io/library/ubuntu:22.04"
     pre_build_image: true
     depends_on:
       - mysql_instance
