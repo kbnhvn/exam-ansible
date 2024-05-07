@@ -4,10 +4,14 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: instance
+  - name: mysql_instance
     image: "docker.io/library/ubuntu:20.04"
     pre_build_image: true
-    cgroupns_mode: host
+  - name: wordpress_instance
+    image: "docker.io/library/ubuntu:20.04"
+    pre_build_image: true
+    depends_on:
+      - mysql_instance
 provisioner:
   name: ansible
   config_options:
@@ -15,8 +19,8 @@ provisioner:
       roles_path: ../../roles
   inventory:
     host_vars:
-      instance:
-        # ansible_become: true
+      wordpress_instance:
+        ansible_connection: docker
         wp_version: "latest"
         wp_webserver: "nginx"
         wp_admin_email: "joel.lourenco.pro@gmail.com"
@@ -25,12 +29,14 @@ provisioner:
         wp_db_name: "wordpress"
         wp_db_user: "datascientest"
         wp_db_password: "dbpassword"
-        wp_db_host: "172.31.9.163"
+        wp_db_host: "mysql_instance"
         wp_db_charset: "utf8"
         wp_debug: "True"
+      mysql_instance:
+        ansible_connection: docker
         wp_mysql_db: "wordpress"
         wp_mysql_user: "datascientest"
         wp_mysql_password: "dbpassword"
-        wp_mysql_host: "172.31.9.163" 
+        wp_mysql_host: "mysql_instance"
 verifier:
   name: testinfra
