@@ -14,10 +14,3 @@
       ansible.builtin.apt:
         update_cache: yes
       become: true
-
-    - name: Ensure MySQL is running
-      ansible.builtin.service:
-        name: mysql
-        state: started
-        enabled: yes
-      become: true
