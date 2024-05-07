@@ -1,7 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  tasks:
-    - name: "Include Exam-ansible"
-      include_role:
-        name: "Exam-ansible"
+  roles:
+    - role: mysql
+    - role: wordpress
