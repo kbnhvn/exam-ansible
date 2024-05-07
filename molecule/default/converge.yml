@@ -1,6 +1,2 @@
 ---
-- name: Converge
-  hosts: all
-  tasks:
-    - name: Include main playbook
-      import_playbook: exam-playbook.yml
+- import_playbook: exam-playbook.yml
