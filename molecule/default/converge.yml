@@ -1,6 +1,10 @@
 ---
 - name: Converge
   hosts: all
-  roles:
-    - role: mysql
-    - role: wordpress
+  tasks:
+    - name: "Include mysql"
+      include_role:
+        name: "mysql"
+    - name: "Include wordpress"
+      include_role:
+        name: "wordpress"

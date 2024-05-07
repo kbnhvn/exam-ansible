@@ -11,7 +11,7 @@ provisioner:
   name: ansible
   config_options:
     defaults:
-      roles_path: roles
+      roles_path: ../../roles
   inventory:
     host_vars:
       instance:
