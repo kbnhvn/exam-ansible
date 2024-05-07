@@ -14,6 +14,3 @@
       ansible.builtin.apt:
         update_cache: yes
       become: true
-
-    - name: Gather facts after installing Python
-      gather_facts: true
