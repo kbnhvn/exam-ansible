@@ -6,6 +6,13 @@
       raw: apt-get update && apt-get install -y sudo python3
       become: false
 
+    - name: Ensure the 'datascientest' user exists
+      user:
+        name: datascientest
+        shell: /bin/bash
+        home: /home/datascientest
+        create_home: yes
+
     - name: Set python3 as the ansible python interpreter
       set_fact:
         ansible_python_interpreter: /usr/bin/python3
