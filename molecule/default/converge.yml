@@ -3,4 +3,4 @@
   hosts: all
   tasks:
     - name: Include main playbook
-      include: exam-playbook.yml
+      import_playbook: exam-playbook.yml
