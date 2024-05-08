@@ -21,6 +21,7 @@
     name: mysql
     state: started
     enabled: yes
+  become: true
 
 - name: install dependencies
   apt:
