@@ -29,6 +29,27 @@
     cache_valid_time: 86400
     state: present
 
+#####################
+
+- name: Check MySQL service
+  ansible.builtin.service:
+    name: mysql
+    state: started
+    enabled: yes
+  become: true
+
+- name: Check MySQL socket file
+  ansible.builtin.stat:
+    path: /var/run/mysqld/mysqld.sock
+  register: socket
+
+- name: Debug MySQL socket file
+  ansible.builtin.debug:
+    msg: "MySQL socket file exists at /var/run/mysqld/mysqld.sock"
+  when: socket.stat.exists
+
+  ####################
+
 - name: create database
   mysql_db:
     name: "{{ wp_mysql_db }}"
