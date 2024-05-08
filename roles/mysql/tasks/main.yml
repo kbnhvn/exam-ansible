@@ -1,12 +1,12 @@
 ---
 # tasks file for mysql
-- name: install mysql-server
-  apt:
-    pkg: mysql-server
-    update_cache: yes
-    cache_valid_time: 86400
-    state: present
-  when: ansible_distribution == 'Ubuntu'
+# - name: install mysql-server
+#   apt:
+#     pkg: mysql-server
+#     update_cache: yes
+#     cache_valid_time: 86400
+#     state: present
+#   when: ansible_distribution == 'Ubuntu'
 
 - name: Install mariadb-server
   apt:
