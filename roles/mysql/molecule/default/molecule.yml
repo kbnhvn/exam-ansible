@@ -5,9 +5,12 @@ driver:
   name: docker
 platforms:
   - name: mysql_instance
-    image: "docker.io/library/ubuntu:22.04"
-    volumes:
-      - instance-mysql-socket:/var/run/mysqld
+    image: "mysql:8.0-debian"
+    environment:
+      MYSQL_DATABASE: "wordpress"
+      MYSQL_USER: "datascientest"
+      MYSQL_PASSWORD: "dbpassword"
+      MYSQL_ROOT_PASSWORD: "Datascientest2022"
     pre_build_image: true
     exposed_ports:
       - "3306"
