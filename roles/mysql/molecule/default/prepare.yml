@@ -10,6 +10,19 @@
       raw: apt-get update && apt-get install -y mysql-server
       become: true
 
+    - name: Update MySQL configuration
+      copy:
+        src: ./files/my.cnf
+        dest: /etc/mysql/my.cnf
+      notify: restart mysql
+      become: true
+
+    - name: Ensure MySQL is started and enabled
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+
     - name: /var/run/mysql chown
       file:
         path: /var/run/mysqld
