@@ -6,8 +6,8 @@ driver:
 platforms:
   - name: mysql_instance
     image: "docker.io/library/ubuntu:22.04"
-    published_ports:
-      - "3306:3306"
+    volumes:
+      - instance-mysql-socket:/var/run/mysqld
     pre_build_image: true
 provisioner:
   name: ansible

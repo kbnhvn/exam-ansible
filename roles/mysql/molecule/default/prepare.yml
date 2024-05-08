@@ -3,8 +3,18 @@
   gather_facts: false
   tasks:
     - name: Install sudo and python3
-      raw: apt-get update && apt-get install -y sudo python3 apt-utils mysql-client
+      raw: apt-get update && apt-get install -y sudo python3 apt-utils
       become: false
+
+    - name: Install mysql-server
+      raw: apt-get update && apt-get install -y mysql-server
+      become: true
+
+    - name: /var/run/mysql chown
+      file:
+        path: /var/run/mysqld
+        owner: mysql
+        group: mysql
 
     - name: Set python3 as the ansible python interpreter
       set_fact:
