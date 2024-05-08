@@ -16,19 +16,11 @@
     state: present
   when: ansible_distribution == 'Debian'
 
-- name: start mysql
+- name: start MariaDB
   service:
     name: mysql
     state: started
     enabled: yes
-  when: ansible_distribution == 'Ubuntu'
-
-- name: start mariaDB
-  service:
-    name: mariadb
-    state: started
-    enabled: yes
-  when: ansible_distribution == 'Debian'
 
 - name: install dependencies
   apt:
