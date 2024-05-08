@@ -6,33 +6,6 @@
       raw: apt-get update && apt-get install -y sudo python3 apt-utils
       become: false
 
-    - name: Install mysql-server
-      raw: apt-get update && apt-get install -y mysql-server
-      become: true
-
-    - name: Update MySQL configuration
-      copy:
-        src: ./files/my.cnf
-        dest: /etc/mysql/my.cnf
-      become: true
-
-    - name: restart mysql
-      service:
-        name: mysql
-        state: restarted      
-
-    - name: Ensure MySQL is started and enabled
-      service:
-        name: mysql
-        state: started
-        enabled: yes
-
-    - name: /var/run/mysql chown
-      file:
-        path: /var/run/mysqld
-        owner: mysql
-        group: mysql
-
     - name: Set python3 as the ansible python interpreter
       set_fact:
         ansible_python_interpreter: /usr/bin/python3
