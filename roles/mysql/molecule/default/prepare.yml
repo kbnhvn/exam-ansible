@@ -3,37 +3,12 @@
   gather_facts: false
   tasks:
     - name: Install sudo and python3
-      raw: apt-get update && apt-get install -y sudo python3 apt-utils mysql-server mysql-client
+      raw: apt-get update && apt-get install -y sudo python3 apt-utils mysql-client
       become: false
 
     - name: Set python3 as the ansible python interpreter
       set_fact:
         ansible_python_interpreter: /usr/bin/python3
-
-    # - name: Create necessary directories
-    #   file:
-    #     path: "{{ item }}"
-    #     state: directory
-    #     owner: mysql
-    #     group: mysql
-    #   with_items:
-    #     - /var/run/mysqld
-    #   become: true
-
-    # - name: Ensure MySQL is configured to use a socket
-    #   lineinfile:
-    #     path: /etc/mysql/mysql.conf.d/mysqld.cnf
-    #     regexp: '^socket'
-    #     line: 'socket=/var/run/mysqld/mysqld.sock'
-    #     state: present
-    #   become: true
-
-    # - name: Start MySQL service
-    #   service:
-    #     name: mysql
-    #     state: started
-    #     enabled: true
-    #   become: true
 
     - name: Update apt cache
       ansible.builtin.apt:
