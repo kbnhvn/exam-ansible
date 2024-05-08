@@ -5,9 +5,8 @@ driver:
   name: docker
 platforms:
   - name: mysql_instance
-    build:
-      context: .
-      dockerfile: Dockerfile.j2
+    image: mysql
+    dockerfile: Dockerfile.j2
     volumes:
       - instance-mysql-socket:/var/run/mysqld
     pre_build_image: false
