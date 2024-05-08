@@ -34,7 +34,7 @@
 - name: create root user
   mysql_user:
     name: root
-    password: "{{ mysql_root_password }}"
+    password: Datascientest2022
     plugin: mysql_native_password
     priv: '*.*:ALL,GRANT'
     state: present
