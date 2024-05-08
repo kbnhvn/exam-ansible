@@ -14,3 +14,17 @@
       ansible.builtin.apt:
         update_cache: yes
       become: true
+
+    - name: Ensure MySQL is configured to use socket
+      ansible.builtin.lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^socket'
+        line: 'socket=/var/run/mysqld/mysqld.sock'
+        state: present
+      become: true
+    
+    - name: restart mysql
+      ansible.builtin.service:
+        name: mysql
+        state: restarted
+      become: true
