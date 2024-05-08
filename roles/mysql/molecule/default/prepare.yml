@@ -2,6 +2,14 @@
   hosts: all
   gather_facts: false
   tasks:
+    - name: Install sudo and python3
+      raw: apt-get update && apt-get install -y net-tools iputils-ping sudo apt-utils python3 mysql-server
+      become: false
+
+    - name: Set python3 as the ansible python interpreter
+      set_fact:
+        ansible_python_interpreter: /usr/bin/python3
+
     - name: Update apt cache
       ansible.builtin.apt:
         update_cache: yes

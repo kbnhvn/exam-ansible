@@ -5,11 +5,10 @@ driver:
   name: docker
 platforms:
   - name: mysql_instance
-    image: mysql
-    dockerfile: Dockerfile.j2
+    image: "docker.io/library/ubuntu:22.04"
     volumes:
       - instance-mysql-socket:/var/run/mysqld
-    pre_build_image: false
+    pre_build_image: true
     exposed_ports:
       - "3306"
 provisioner:
