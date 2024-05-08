@@ -31,40 +31,21 @@
 
 #####################
 
-# - name: Check MySQL service
-#   ansible.builtin.service:
-#     name: mysql
-#     state: started
-#     enabled: yes
-#   become: true
+- name: Set password for root user
+  mysql_user:
+    name: "root"
+    password: "{{ mysql_root_password }}"
+    priv: '*.*:ALL,GRANT'
+    host: 'localhost'
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    state: present
 
-# - name: Check MySQL socket file
-#   ansible.builtin.stat:
-#     path: /var/run/mysqld/mysqld.sock
-#   register: socket
-
-# - name: Debug MySQL socket file
-#   ansible.builtin.debug:
-#     msg: "MySQL socket file exists at /var/run/mysqld/mysqld.sock"
-#   when: socket.stat.exists
-
-# - name: Set root password
-#   mysql_user:
-#     login_unix_socket: /var/run/mysqld/mysqld.sock
-#     name: root
-#     password: "{{ mysql_root_password }}"
-#     priv: '*.*:ALL,GRANT'
-#     state: present
-#   become: true
-
-# - name: Create MySQL database
-#   community.mysql.mysql_db:
-#     name: "{{ wp_mysql_db }}"
-#     state: present
-#     login_unix_socket: /var/run/mysqld/mysqld.sock
-#     login_user: root
-#     login_password: "{{ mysql_root_password }}"
-#   become: true
+- name: Save root password in .my.cnf
+  template:
+    src: root_cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    mode: '0600'
 
   ####################
 
@@ -72,9 +53,7 @@
   mysql_db:
     name: "{{ wp_mysql_db }}"
     state: present
-    login_host: "localhost"
-    login_user: "root"
-    login_password: "{{ mysql_root_password }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
 
 - name: Create MySQL user and grant privileges
   mysql_user:
