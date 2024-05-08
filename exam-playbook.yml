@@ -7,6 +7,7 @@
     wp_mysql_user: "datascientest"
     wp_mysql_password: "dbpassword"
     wp_mysql_host: "172.31.9.163" 
+    mysql_root_password: "Datascientest2022"
     wp_admin_email: "joel.lourenco.pro@gmail.com"
     wp_sitename: "exam-ansible"
     wp_install_dir: "/var/www/html/demo.com"

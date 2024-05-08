@@ -48,11 +48,9 @@
     msg: "MySQL socket file exists at /var/run/mysqld/mysqld.sock"
   when: socket.stat.exists
 
-- name: Ensure MySQL root password is set
-  community.mysql.mysql_user:
+- name: Set root password
+  mysql_user:
     login_unix_socket: /var/run/mysqld/mysqld.sock
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
     name: root
     password: "{{ mysql_root_password }}"
     priv: '*.*:ALL,GRANT'

@@ -10,21 +10,32 @@
       set_fact:
         ansible_python_interpreter: /usr/bin/python3
 
-    - name: Update apt cache
-      ansible.builtin.apt:
-        update_cache: yes
+    - name: Create necessary directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: mysql
+        group: mysql
+      with_items:
+        - /var/run/mysqld
       become: true
 
-    - name: Ensure MySQL is configured to use socket
-      ansible.builtin.lineinfile:
+    - name: Ensure MySQL is configured to use a socket
+      lineinfile:
         path: /etc/mysql/mysql.conf.d/mysqld.cnf
         regexp: '^socket'
         line: 'socket=/var/run/mysqld/mysqld.sock'
         state: present
       become: true
-    
-    - name: restart mysql
-      ansible.builtin.service:
+
+    - name: Start MySQL service
+      service:
         name: mysql
-        state: restarted
+        state: started
+        enabled: true
+      become: true
+
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
       become: true
