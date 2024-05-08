@@ -19,5 +19,6 @@ provisioner:
         wp_mysql_user: "datascientest"
         wp_mysql_password: "dbpassword"
         wp_mysql_host: "mysql_instance"
+        mysql_root_password: "Datascientest2022"
 verifier:
   name: testinfra
