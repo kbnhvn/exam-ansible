@@ -11,8 +11,6 @@ platforms:
     pre_build_image: true
     exposed_ports:
       - "3306"
-    networks:
-      -name : "molecule"
 provisioner:
   name: ansible
   inventory:
