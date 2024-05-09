@@ -6,7 +6,9 @@
     update_cache: yes
     cache_valid_time: 86400
     state: present
-  when: ansible_distribution == 'Ubuntu'
+  when: 
+    - ansible_distribution == 'Ubuntu'
+    - inventory_hostname != 'mysql_instance'
 
 - name: Install mariadb-server
   apt:

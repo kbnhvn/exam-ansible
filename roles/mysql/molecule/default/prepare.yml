@@ -3,7 +3,7 @@
   gather_facts: false
   tasks:
     - name: Install sudo and python3
-      raw: apt-get update && apt-get install -y sudo python3
+      raw: apt-get update && apt-get install -y sudo python3 mysql-server
       become: false
 
     - name: Set python3 as the ansible python interpreter
