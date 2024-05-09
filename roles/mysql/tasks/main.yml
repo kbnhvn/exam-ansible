@@ -23,6 +23,7 @@
     name: mysql
     state: started
     enabled: yes
+  when: inventory_hostname != 'mysql_instance'
 
 - name: install dependencies
   apt:

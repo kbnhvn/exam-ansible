@@ -6,6 +6,11 @@
       raw: apt-get update && apt-get install -y sudo python3 mysql-server
       become: false
 
+    - name: Start MySQL service
+      ansible.builtin.shell:
+        cmd: "/etc/init.d/mysql start"
+      become: true
+
     - name: Set python3 as the ansible python interpreter
       set_fact:
         ansible_python_interpreter: /usr/bin/python3
