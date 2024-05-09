@@ -2,8 +2,8 @@
   hosts: all
   gather_facts: false
   tasks:
-    - name: Install sudo and python3
-      raw: apt-get update && apt-get install -y sudo python3 mysql-server
+    - name: Install packages
+      raw: apt-get update && apt-get install -y sudo python3 mysql-server php-mysql python3-pymysql
       become: false
 
     - name: Start MySQL service
