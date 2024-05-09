@@ -1,5 +1,14 @@
 ---
 # tasks file for mysql
+
+###############################################################
+# condition : inventory_hostname != 'mysql_molecule_instance' #
+# Is used to avoid issues with :                              #
+#  - packages install                                         #
+#  - Ansible 'service' as systemd not present in docker image #
+# These tasks are done during prepare step!                   #
+###############################################################
+
 - name: install mysql-server
   apt:
     pkg: mysql-server

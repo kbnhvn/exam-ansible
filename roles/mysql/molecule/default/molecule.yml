@@ -11,6 +11,8 @@ platforms:
     pre_build_image: true
     exposed_ports:
       - "3306"
+    networks:
+      -name : "molecule"
 provisioner:
   name: ansible
   inventory:
@@ -20,7 +22,7 @@ provisioner:
         wp_mysql_db: "wordpress"
         wp_mysql_user: "datascientest"
         wp_mysql_password: "dbpassword"
-        wp_mysql_host: "mysql_instance"
+        wp_mysql_host: "mysql_molecule_instance"
         mysql_root_password: "Datascientest2022"
 verifier:
   name: testinfra

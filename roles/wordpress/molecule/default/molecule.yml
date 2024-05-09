@@ -9,6 +9,8 @@ platforms:
     pre_build_image: true
     depends_on:
       - mysql_molecule_instance
+    networks:
+      -name : "molecule"
 provisioner:
   name: ansible
   inventory:
