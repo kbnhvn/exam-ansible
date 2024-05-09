@@ -7,8 +7,6 @@ platforms:
   - name: wordpress_molecule_instance
     image: "docker.io/library/ubuntu:22.04"
     pre_build_image: true
-    depends_on:
-      - mysql_molecule_instance
 provisioner:
   name: ansible
   inventory:
