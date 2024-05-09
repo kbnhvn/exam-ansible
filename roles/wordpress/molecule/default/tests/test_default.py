@@ -21,8 +21,8 @@ def test_mysql_connection(host):
     wp_db_host = host.ansible.get_variables().get('wp_db_host')
     wp_db_user = host.ansible.get_variables().get('wp_db_user')
     wp_db_password = host.ansible.get_variables().get('wp_db_password')
-    wp_mysql_db = host.ansible.get_variables().get('wp_mysql_db')
-    cmd = host.run(f"mysql -h {wp_db_host} -u {wp_db_user} -p{wp_db_password} -e 'SHOW DATABASES;'")
+    wp_mysql_db = host.ansible.get_variables().get('wp_db_name')
+    cmd = host.run(f"mysql -h {wp_db_host} -P 3306 -u {wp_db_user} -p{wp_db_password} -e 'SHOW DATABASES;'")
     assert 'Error' not in cmd.stderr, "MySQL connection failed: {}".format(cmd.stderr)
     assert wp_mysql_db in cmd.stdout, "Database {} should be listed in MySQL databases".format(wp_mysql_db)
 
