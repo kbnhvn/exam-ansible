@@ -4,7 +4,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: mysql_instance
+  - name: mysql_molecule_instance
     image: "docker.io/library/ubuntu:22.04"
     volumes:
       - instance-mysql-socket:/var/run/mysqld
@@ -15,7 +15,7 @@ provisioner:
   name: ansible
   inventory:
     host_vars:
-      mysql_instance:
+      mysql_molecule_instance:
         ansible_connection: docker
         wp_mysql_db: "wordpress"
         wp_mysql_user: "datascientest"

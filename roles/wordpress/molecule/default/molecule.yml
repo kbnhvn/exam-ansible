@@ -4,16 +4,16 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: wordpress_instance
+  - name: wordpress_molecule_instance
     image: "docker.io/library/ubuntu:22.04"
     pre_build_image: true
     depends_on:
-      - mysql_instance
+      - mysql_molecule_instance
 provisioner:
   name: ansible
   inventory:
     host_vars:
-      wordpress_instance:
+      wordpress_molecule_instance:
         ansible_connection: docker
         wp_version: "latest"
         wp_webserver: "nginx"
