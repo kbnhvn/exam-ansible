@@ -6,7 +6,6 @@ driver:
 platforms:
   - name: mysql_instance
     image: "docker.io/library/ubuntu:22.04"
-    dockerfile: ./Dockerfile.j2
     volumes:
       - instance-mysql-socket:/var/run/mysqld
     pre_build_image: true
